@@ -2,7 +2,7 @@
 Welcome to "Morsecode to English" convertor
 
 ##Requirments:
-*Requires python 2.7 (or above)*
+*Requires python 2.7 (not python3 compatible)*
 
 ##How to use the script
 python morse_to_english.py "your-input-morse-code"

@@ -50,14 +50,14 @@ morse_to_english_lookup_table = {v: k for k, v in english_to_morse_lookup_table.
 
 # Meat of the conversion logic is here
 def convert_to_english(input_morse_code=None):
-    """
+    '''
     Abstract: Converts the input morse-code to english string
              (prints and returns the converted string)
     input: more encode string
     Returns: None
     Error: If one of the the input morse code does not match to a valid lookup
            of the morse to english lookup dictionary then that will be error
-    """
+    '''
     outlist = []
     try:
         for each in input_morse_code.split():
