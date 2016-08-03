@@ -4,7 +4,8 @@
 import ipdb
 import sys
 
-morse_look_up_table ={
+debug = False
+english_to_morse_lookup_table ={
     'A':'.-',
     'B':'-...',
     'C':'-.-.',
@@ -41,54 +42,48 @@ morse_look_up_table ={
     '7':'--...',
     '8':'---..',
     '9':'----.',
-    ' ':' '} # just keep space as space
+    ' ':'/'
+}
+
+morse_to_english_lookup_table = {v: k for k, v in english_to_morse_lookup_table.items()}
 
 
-def convert_to_morse(input_string=None):
-    outlist = [] 
-    for index, each in enumerate(input_string):
-        thecode = morse_look_up_table.get(each, None)
-        if thecode is None:
-            ipdb.set_trace()
-            assert False, ("At the index:{} the alphabet:{} is not a"
-                           " valid english alphabet".format(index, each))
-        else:
-            outlist.append(thecode)
-
-    retstr = ''
-    for each in outlist:
-        retstr = retstr + ' ' + each
-    # todo remove the trailing and startign spaces
+def convert_to_english(input_morse_code=None):
+    outlist = []
+    try:
+        for each in input_morse_code():
+            english_alphabet = morse_to_english_lookup_table.get(each, None)
+            if english_alphabet is None:
+                assert False, ("At the index:{} the alphabet:{} is not a"
+                               " valid english alphabet".format(each))
+            else:
+                outlist.append(english_alphabet)
+    except Exception as err:
+        print "Invalid morse input:{}".format(input_string)
+        if debug is True:
+            print "Error: {}".format(err)
+        return
     
-    print "The Equivalent morse code is {} ".format(' '.join(outlist))
-    return outlist
+    print "The Equivalent english is: {} ".format(''.join(outlist))
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print("Error below is a example of how to use this:\n"
-              "python morse_to_english.py \"India Boulevard\" ")
+              "python morse_to_english.py \".. / .-.. --- ...- . /"
+              ".. -. -.. .. .- -... --- ..- .-.. . ...- .- .-. -..\" "
+              "\n Note that letters are seperated by space and words by /")
     else:
-        input_string = sys.argv[1]
-        converted_morse_code = convert_to_morse(input_string.upper())
+        input_morse_code = sys.argv[1]
+        convert_to_english(input_morse_code)
 
 
-
-        
 '''
-Todo: 
-Unit and functional testing:
---> Postitive test: case of valid english sentence and numbers
---> Negative test: 
---> empty string as a input
---> Non English test
---> multiple spaces in the string
---> extremeley long string where it can be memory intensive and swap to disk!. 
-Solution is to have limit on input string 
---> mixed characters of upper and lower case and number in between the string
-
-some more fixes: 
---> If you want a two way function to get back the original string with case
-    then we can achive that by keeping the casee of each character as a metadata, 
-     which will be dictionary of triple 
+Tests todo:
+-> +ve test: valid morse code
+-> empty morse code
+-> Only '/' in the code
+-> invalid morse code
+-> single string with both invalid and valid morse code
+-> alphabet int eh morse code
 '''
