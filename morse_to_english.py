@@ -51,7 +51,7 @@ morse_to_english_lookup_table = {v: k for k, v in english_to_morse_lookup_table.
 def convert_to_english(input_morse_code=None):
     outlist = []
     try:
-        for each in input_morse_code():
+        for each in input_morse_code.split():
             english_alphabet = morse_to_english_lookup_table.get(each, None)
             if english_alphabet is None:
                 assert False, ("At the index:{} the alphabet:{} is not a"
@@ -59,12 +59,12 @@ def convert_to_english(input_morse_code=None):
             else:
                 outlist.append(english_alphabet)
     except Exception as err:
-        print "Invalid morse input:{}".format(input_string)
+        print "Invalid morse input:{}".format(input_morse_code)
         if debug is True:
             print "Error: {}".format(err)
         return
     
-    print "The Equivalent english is: {} ".format(''.join(outlist))
+    print "The Equivalent english is:{}".format(''.join(outlist))
 
 
 if __name__ == '__main__':
